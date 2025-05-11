@@ -1,0 +1,1 @@
+cd frontend && ng build && cd .. && rm -rf mv src/main/resources/static/* && mv frontend/dist/frontend/browser/* src/main/resources/static

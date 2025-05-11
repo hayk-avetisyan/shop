@@ -1,0 +1,17 @@
+<div id="popup">
+  <div>
+    <span id="close-btn" (click)="close()">&times;</span>
+    <h2>Ավելացնել ապրանք</h2>
+    <div>
+      <label for="quantity">Քանակ:</label>
+      <input [(ngModel)]="quantity" type="number" id="quantity" min="1" value="1">
+    </div>
+    <div id="flavor-container" *ngIf="product.flavours.length > 0">
+      <label for="flavor">Համ:</label>
+      <select id="flavor" [(ngModel)]="flavourId">
+        <option *ngFor="let flavour of product.flavours" [value]="flavour.id">{{flavour.title}}</option>
+      </select>
+    </div>
+    <button id="add-to-cart-btn" (click)="addToBasket()">Ավելացնել զամբյուղի մեջ</button>
+  </div>
+</div>
