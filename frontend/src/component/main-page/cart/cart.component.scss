@@ -1,0 +1,84 @@
+.cart-section {
+  position: fixed;
+  right: 20px;  /* Զամբյուղը կտեղադրվի աջ կողմում */
+  bottom: 20px;  /* Զամբյուղը կլինի վերը */
+  background-color: #fff;  /* Զամբյուղի ֆոնի գույն */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;  /* Զամբյուղի լայնություն */
+  z-index: 1000;  /* Զամբյուղը կլինի բոլոր տարրերից վեր */
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);  /* Զամբյուղի վրա մկնիկը կախված ժամանակը՝ փոքր անիմացիա */
+  }
+
+  .cart-image {
+    display: flex;
+
+    img {
+      width: 35px; /* Պատկերակին սահմանում ենք 50px լայնություն */
+      height: 35px; /* Պատկերակին սահմանում ենք 50px բարձրություն */
+      transition: transform 0.3s ease; /* Անիմացիա ՝ փոքր փոփոխությունների համար */
+
+      &:hover {
+        transform: scale(1.1); /* Երբ սեղմում են պատկերակի վրա, այն փոքր-ինչ մեծանում է */
+      }
+    }
+  }
+
+  .item-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 300px; /* Կարգավորում ենք առավելագույն բարձրությունը */
+    overflow-y: auto;
+
+    li {
+      font-size: 18px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+      p {
+        margin: 5px 0;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: darkred;
+        }
+      }
+    }
+  }
+
+  .cart-summary {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+
+    #total-price {
+      color: #ff6347;
+    }
+  }
+
+  .order-btn {
+    margin-top: 10px;
+  }
+}
+

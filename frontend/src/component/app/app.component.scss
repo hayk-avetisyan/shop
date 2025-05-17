@@ -1,0 +1,24 @@
+nav {
+  background: #553296;
+  padding: 12px 50px;
+
+  button {
+    background: none;
+    font-weight: bold;
+    font-size: 12pt;
+    color: white;
+    cursor: pointer;
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+footer {
+  margin-top: 20px;
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 16px;
+}

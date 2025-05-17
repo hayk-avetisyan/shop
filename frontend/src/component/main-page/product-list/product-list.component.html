@@ -1,0 +1,20 @@
+<section class="product-section">
+  <h2>Տեսականի</h2>
+  <div class="product-list">
+
+    @for (product of products; track product.title) {
+
+      <div class="product">
+        <img [src]="product.image" [alt]="product.title">
+        <div>
+          <h3>{{ product.title }}</h3>
+          <p>{{ "Գին: " + product.price + " դրամ" }}</p>
+          <button class="add-to-cart" (click)="addToChart(product)">Ավելացնել զամբյուղ</button>
+        </div>
+      </div>
+
+    }
+
+  </div>
+
+</section>

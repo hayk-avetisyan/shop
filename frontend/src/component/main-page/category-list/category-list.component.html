@@ -1,0 +1,16 @@
+<section class="categories">
+
+  <h2>Բաժիններ</h2>
+  <div class="category-info">
+
+    @for (category of categories; track category.title) {
+
+      <div class="category" (click)="openPopup(category)">
+        <img [src]="category.coverImage" [alt]="category.title">
+        <h3>{{ category.title }}</h3>
+        <p>{{ category.description }}</p>
+      </div>
+
+    }
+  </div>
+</section>

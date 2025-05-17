@@ -1,39 +1,49 @@
-import { Injectable } from '@angular/core';
-import { ReplaySubject, Observable } from 'rxjs';
-import {BasketItem} from '../model/basket-item';
+import {Injectable} from '@angular/core';
+import {Observable, ReplaySubject} from 'rxjs';
+import {CartItem} from '../model/cart-item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  private items: Map<string, number> = new Map()
-  private itemSubject: ReplaySubject<Map<string, number>> = new ReplaySubject(1)
+  private items: CartItem[] = []
+  private itemSubject: ReplaySubject<CartItem[]> = new ReplaySubject(1)
 
-  onChange(): Observable<Map<string, number>> {
+  onChange(): Observable<CartItem[]> {
     return this.itemSubject.asObservable()
   }
 
-  add(newItem: BasketItem) {
+  add(newItem: CartItem) {
 
-    const key = newItem.product.id + '-' + (newItem.flavourId ? newItem.flavourId : '')
-    const quantity = this.items.get(key)
+    let item = this.items.find(item => item.product.id == newItem.product.id)
 
-    quantity && this.items.set(key, quantity + 1)
-    !quantity && this.items.set(key,1)
+    if (item) {
+      item.quantity += newItem.quantity;
+    } else {
+      this.items.push(newItem)
+    }
 
+    this.itemSubject.next([...this.items]);
+  }
+
+  remove(itemToRemove: CartItem) {
+
+    const newItems: CartItem[] = []
+
+    for (const item of this.items) {
+      const matches = item.product.id == itemToRemove.product.id
+      if (!matches) {
+        newItems.push(item);
+      }
+    }
+
+    this.items = newItems;
     this.itemSubject.next(this.items);
   }
 
-  remove(key: string) {
-
-    let quantity = this.items.get(key)
-    if (quantity) {
-      quantity--;
-      quantity < 1 && this.items.delete(key)
-      quantity > 0 && this.items.set(key, quantity)
-
-      this.itemSubject.next(this.items);
-    }
+  clear() {
+    this.items = []
+    this.itemSubject.next(this.items)
   }
 }

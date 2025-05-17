@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //     // Ապրանքի ջնջման կոճակը
     //     const removeBtn = document.createElement("button");
     //     removeBtn.textContent = "Ջնջել";
-    //     removeBtn.classList.add("remove-btn");
+    //     removeBtn.classList.add(");
     //     removeBtn.addEventListener("click", function () {
     //         cartList.removeChild(listItem);
     //         updateTotalPrice(); // Թարմացնել ընդհանուր գինը

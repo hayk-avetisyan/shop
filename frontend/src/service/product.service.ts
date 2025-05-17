@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Product} from '../model/product';
+import {ProductCategory} from '../model/product-category';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  products(): Observable<Product[]> {
-    return this.http.get<Product[]>('/api/products', {responseType: 'json'});
+  products(): Observable<ProductCategory[]> {
+    return this.http.get<ProductCategory[]>('/api/products', {responseType: 'json'});
   }
 }

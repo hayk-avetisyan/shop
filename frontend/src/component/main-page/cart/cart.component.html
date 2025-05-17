@@ -1,0 +1,20 @@
+<section class="cart-section">
+  <div class="cart-image">
+    <img src="media/basket.jpg" alt="Cart Image">
+    <h2>Զամբյուղ</h2>
+  </div>
+  <ul class="item-list">
+
+    @for (item of items; track item.product.title) {
+      <li>
+        {{ itemText(item) }}
+        <button class="remove-btn" (click)="removeItem(item)">Ջնջել</button>
+      </li>
+    }
+
+  </ul>
+  <div class="cart-summary">
+    <p>Ընդհանուր գումար: <span id="total-price">{{ totalPrice }}</span> դրամ</p>
+  </div>
+  <button class="order-btn" (click)="order()">Պատվիրել</button>
+</section>

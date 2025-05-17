@@ -1,0 +1,11 @@
+<div id="popup">
+  <div>
+    <span id="close-btn" (click)="close()">&times;</span>
+    <h2>Ավելացնել ապրանք</h2>
+    <div>
+      <label for="quantity">Քանակ:</label>
+      <input [(ngModel)]="quantity" type="number" id="quantity" min="1" value="1">
+    </div>
+    <button id="add-to-cart-btn" (click)="addToBasket()">Ավելացնել զամբյուղի մեջ</button>
+  </div>
+</div>

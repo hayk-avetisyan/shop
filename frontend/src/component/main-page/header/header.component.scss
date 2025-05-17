@@ -1,0 +1,34 @@
+/* Գլխավոր բաժին */
+.home-section {
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 50px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  height: 100vh; /* Ուզում ենք, որ վիդեոն ծածկի ամբողջ էջը */
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    z-index: -1; /* Զամբյուղը և այլ տարրերը կգտնվեն վիդեոյից վեր */
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Վիդեոն կփորձի ծածկել ամբողջ տարածությունը՝ պահպանելով իր համամասնությունները */
+    }
+  }
+}
