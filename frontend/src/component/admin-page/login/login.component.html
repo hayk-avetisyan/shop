@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="login-form">
+    <h2>Մուտք</h2>
+    <div class="form-group">
+      <label for="username">Օգտանուն</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="username"
+        placeholder="Մուտքագրեք ձեր օգտանունը"
+        required>
+      <div class="error-message" *ngIf="usernameError">{{ usernameError }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Գաղտնաբառ</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Մուտքագրեք ձեր գաղտնաբառը"
+        required>
+      <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
+    </div>
+
+    <div class="error-message" *ngIf="loginError">{{ loginError }}</div>
+
+    <button (click)="onLogin()">Մուտք գործել</button>
+  </div>
+</div>

@@ -1,8 +1,7 @@
 import {NgModule, provideZoneChangeDetection} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import {provideHttpClient} from '@angular/common/http';
-import {AppComponent} from './component/app/app.component';
+import {provideHttpClient, withXsrfConfiguration} from '@angular/common/http';
 import {provideRouter, RouterModule} from '@angular/router';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
@@ -21,7 +20,10 @@ import {AboutSectionComponent} from './component/about-page/about-section/about-
 import {ContactFormComponent} from './component/about-page/contact-form/contact-form.component';
 import {PaymentPopupComponent} from './component/main-page/payment-popup/payment-popup.component';
 import {CartComponent} from './component/main-page/cart/cart.component';
-
+import {AdminPageComponent} from './component/admin-page/admin-page.component';
+import {AppComponent} from './component/app/app.component';
+import {canActivateAdminPage} from './guards';
+import {LoginComponent} from './component/admin-page/login/login.component';
 
 @NgModule({
   imports: [
@@ -47,7 +49,9 @@ import {CartComponent} from './component/main-page/cart/cart.component';
     PaymentPopupComponent,
     MainPageComponent,
     AboutPageComponent,
-    CartComponent
+    CartComponent,
+    AdminPageComponent,
+    LoginComponent
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -55,9 +59,20 @@ import {CartComponent} from './component/main-page/cart/cart.component';
     provideRouter([
       {path: '', component: MainPageComponent},
       {path: 'about', component: AboutPageComponent},
+      {path: 'admin/login', component: LoginComponent},
+      {
+        path: 'admin',
+        component: AdminPageComponent,
+        canActivate: [canActivateAdminPage],
+      },
       {path: '**', pathMatch: 'full', redirectTo: ''},
     ]),
-    provideHttpClient(),
+    provideHttpClient(
+      withXsrfConfiguration({
+        headerName: 'X-XSRF-TOKEN',
+        cookieName: 'XSRF-TOKEN'
+      })
+    ),
   ]
 })
 export class AppModule { }
