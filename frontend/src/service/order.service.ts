@@ -11,7 +11,7 @@ export class OrderService {
   constructor(private http: HttpClient) {
   }
 
-  placeOrder(order: Order): Observable<boolean> {
-    return this.http.post<boolean>('/api/orders', order)
+  placeOrder(order: Order): Observable<void> {
+    return this.http.post<void>('/api/orders', order)
   }
 }

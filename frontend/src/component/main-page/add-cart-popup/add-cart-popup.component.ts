@@ -14,7 +14,7 @@ export class AddCartPopupComponent {
   public quantity: number = 1;
 
   constructor(
-    private basketService: CartService,
+    private certService: CartService,
     private dialogRef: MatDialogRef<AddCartPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public product: Product
   ) {
@@ -25,7 +25,7 @@ export class AddCartPopupComponent {
   }
 
   addToBasket() {
-    this.basketService.add({
+    this.certService.add({
       product: this.product,
       quantity: this.quantity,
     })

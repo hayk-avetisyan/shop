@@ -57,8 +57,10 @@ export class PaymentPopupComponent {
     if (this.checkValidity()) {
 
       const order: Order = {
+        id: -1,
         items: this.items,
         price: this.price,
+        done: false,
         contact: {
           name: this.cardHolder,
           phone: this.phoneNumber
@@ -66,8 +68,8 @@ export class PaymentPopupComponent {
       };
 
       this.orderService.placeOrder(order).subscribe(
-        succeed => this.showMessageAndClose(succeed ? this.orderPlacedMessage : this.orderErrorMessage),
-        (): void => this.showMessageAndClose(this.orderErrorMessage)
+        () => this.showMessageAndClose(this.orderPlacedMessage, true),
+        (): void => this.showMessageAndClose(this.orderErrorMessage, false)
       )
     }
   }
@@ -101,9 +103,9 @@ export class PaymentPopupComponent {
     this.cvvMessage = '';
   }
 
-  private showMessageAndClose(message: string) {
+  private showMessageAndClose(message: string, result: boolean) {
     this.snackBar.open(message, "Լավ")
-    this.dialogRef.close(true)
+    this.dialogRef.close(result)
   }
 
   private checkValidity(): boolean {
