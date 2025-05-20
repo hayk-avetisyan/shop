@@ -30,4 +30,36 @@ public class MessageRepository {
 	public void remove(int id) {
 		messages.removeIf(message -> message.id() == id);
 	}
+
+	public void markAsRead(int id) {
+		for (int i = 0; i < messages.size(); i++) {
+			Message message = messages.get(i);
+			if (message.id() == id) {
+				messages.set(i, new Message(
+						message.id(),
+						message.name(),
+						message.email(),
+						message.message(),
+						true
+				));
+				break;
+			}
+		}
+	}
+
+	public void markAsUnread(int id) {
+		for (int i = 0; i < messages.size(); i++) {
+			Message message = messages.get(i);
+			if (message.id() == id) {
+				messages.set(i, new Message(
+						message.id(),
+						message.name(),
+						message.email(),
+						message.message(),
+						false
+				));
+				break;
+			}
+		}
+	}
 }

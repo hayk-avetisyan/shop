@@ -34,6 +34,24 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    .actions-cell {
+      width: 150px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-start;
+      visibility: hidden;
+    }
+
+    tr:hover .action-buttons {
+      visibility: visible;
+
+      button {
+        background-color: transparent;
+      }
+    }
   }
 }
 

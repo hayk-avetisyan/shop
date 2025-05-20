@@ -32,4 +32,14 @@ public class MessageController {
 	public void remove(@PathVariable int id) {
 		messageRepository.remove(id);
 	}
+
+	@PatchMapping("/{id}/read")
+	public void markAsRead(@PathVariable int id) {
+		messageRepository.markAsRead(id);
+	}
+
+	@PatchMapping("/{id}/unread")
+	public void markAsUnread(@PathVariable int id) {
+		messageRepository.markAsUnread(id);
+	}
 }

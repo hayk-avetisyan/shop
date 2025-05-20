@@ -12,6 +12,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatIconModule} from '@angular/material/icon';
 import {MainPageComponent} from './component/main-page/main-page.component';
 import {AboutPageComponent} from './component/about-page/about-page.component';
 import {ProductListComponent} from './component/main-page/product-list/product-list.component';
@@ -43,6 +44,7 @@ import {MessagesComponent} from './component/admin-page/messages/messages.compon
     MatExpansionModule,
     MatCardModule,
     MatCheckboxModule,
+    MatIconModule,
     RouterModule
   ],
   declarations: [

@@ -65,4 +65,34 @@ export class MessagesComponent implements OnInit {
     this.showUnread = !this.showUnread;
     this.applyFilters();
   }
+
+  deleteMessage(message: Message): void {
+    this.messageService.delete(message.id).subscribe(() => {
+      // Remove the message from the array
+      this.messages = this.messages.filter(m => m.id !== message.id);
+      this.applyFilters();
+    });
+  }
+
+  markAsRead(message: Message): void {
+    this.messageService.markAsRead(message.id).subscribe(() => {
+      // Update the message in the array
+      const index = this.messages.findIndex(m => m.id === message.id);
+      if (index !== -1) {
+        this.messages[index].seen = true;
+        this.applyFilters();
+      }
+    });
+  }
+
+  markAsUnread(message: Message): void {
+    this.messageService.markAsUnread(message.id).subscribe(() => {
+      // Update the message in the array
+      const index = this.messages.findIndex(m => m.id === message.id);
+      if (index !== -1) {
+        this.messages[index].seen = false;
+        this.applyFilters();
+      }
+    });
+  }
 }

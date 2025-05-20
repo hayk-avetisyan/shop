@@ -18,4 +18,16 @@ export class MessageService {
   send(message: Message): Observable<void> {
     return this.http.post<void>('/api/messages', message)
   }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/messages/${id}`)
+  }
+
+  markAsRead(id: number): Observable<void> {
+    return this.http.patch<void>(`/api/messages/${id}/read`, {})
+  }
+
+  markAsUnread(id: number): Observable<void> {
+    return this.http.patch<void>(`/api/messages/${id}/unread`, {})
+  }
 }

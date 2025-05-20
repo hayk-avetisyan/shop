@@ -9,6 +9,7 @@
           <th>Էլ․ հասցե</th>
           <th>Հաղորդագրություն</th>
           <th>Կարգավիճակ</th>
+          <th>Գործողություններ</th>
         </tr>
       </thead>
       <tbody>
@@ -17,6 +18,19 @@
           <td>{{ message.email }}</td>
           <td>{{ message.message }}</td>
           <td>{{ message.seen ? 'Կարդացված' : 'Չկարդացված' }}</td>
+          <td class="actions-cell">
+            <div class="action-buttons">
+              <button mat-icon-button (click)="deleteMessage(message)" title="Ջնջել">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button *ngIf="!message.seen" (click)="markAsRead(message)" title="Նշել որպես կարդացված">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button *ngIf="message.seen" (click)="markAsUnread(message)" title="Նշել որպես չկարդացված">
+                <mat-icon>visibility_off</mat-icon>
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
