@@ -1,3 +1,5 @@
+import {Product} from './product';
+
 export interface Order {
   id: number,
   items: OrderItem[]
@@ -5,11 +7,11 @@ export interface Order {
     name: string,
     phone: string,
   }
-  done?: boolean
+  done: boolean
   price: number
 }
 
 export interface OrderItem {
-  productId: number,
+  product: Product,
   quantity: number,
 }

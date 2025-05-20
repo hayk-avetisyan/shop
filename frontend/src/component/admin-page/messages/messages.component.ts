@@ -1,0 +1,68 @@
+import {Component, OnInit} from '@angular/core';
+import {MessageService} from '../../../service/message.service';
+import {Message} from '../../../model/message';
+import {ActivatedRoute} from '@angular/router';
+
+@Component({
+  standalone: false,
+  selector: 'shop-messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.scss']
+})
+export class MessagesComponent implements OnInit {
+  messages: Message[] = [];
+  filteredMessages: Message[] = [];
+
+  showRead: boolean = true;
+  showUnread: boolean = true;
+
+  constructor(
+    private messageService: MessageService,
+    private route: ActivatedRoute
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+
+      this.showRead = params['read'] === 'true'
+      this.showUnread = params['unread'] !== 'false';
+
+      if (this.messages.length > 0) {
+        this.applyFilters();
+      } else {
+        this.loadMessages();
+      }
+    });
+  }
+
+  loadMessages(): void {
+    this.messageService.messages().subscribe(messages => {
+      // Sort messages by id
+      this.messages = messages.sort((a, b) => a.id - b.id);
+      this.applyFilters();
+    });
+  }
+
+  applyFilters(): void {
+    this.filteredMessages = this.messages.filter(message => {
+      if (this.showRead && message.seen) {
+        return true;
+      }
+      else if (this.showUnread && !message.seen) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  toggleRead(): void {
+    this.showRead = !this.showRead;
+    this.applyFilters();
+  }
+
+  toggleUnread(): void {
+    this.showUnread = !this.showUnread;
+    this.applyFilters();
+  }
+}

@@ -9,6 +9,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MainPageComponent} from './component/main-page/main-page.component';
 import {AboutPageComponent} from './component/about-page/about-page.component';
 import {ProductListComponent} from './component/main-page/product-list/product-list.component';
@@ -22,8 +25,10 @@ import {PaymentPopupComponent} from './component/main-page/payment-popup/payment
 import {CartComponent} from './component/main-page/cart/cart.component';
 import {AdminPageComponent} from './component/admin-page/admin-page.component';
 import {AppComponent} from './component/app/app.component';
-import {canActivateAdminPage} from './guards';
+import {canActivateAdminPage, canActivateLoginPage} from './guards';
 import {LoginComponent} from './component/admin-page/login/login.component';
+import {OrdersComponent} from './component/admin-page/orders/orders.component';
+import {MessagesComponent} from './component/admin-page/messages/messages.component';
 
 @NgModule({
   imports: [
@@ -35,6 +40,9 @@ import {LoginComponent} from './component/admin-page/login/login.component';
     MatMenuModule,
     MatButtonModule,
     MatToolbarModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatCheckboxModule,
     RouterModule
   ],
   declarations: [
@@ -51,19 +59,30 @@ import {LoginComponent} from './component/admin-page/login/login.component';
     AboutPageComponent,
     CartComponent,
     AdminPageComponent,
-    LoginComponent
+    LoginComponent,
+    OrdersComponent,
+    MessagesComponent
   ],
   bootstrap: [AppComponent],
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter([
       {path: '', component: MainPageComponent},
       {path: 'about', component: AboutPageComponent},
-      {path: 'admin/login', component: LoginComponent},
+      {
+        path: 'admin/login',
+        component: LoginComponent,
+        canActivate: [canActivateLoginPage]
+      },
       {
         path: 'admin',
         component: AdminPageComponent,
         canActivate: [canActivateAdminPage],
+        children: [
+          {path: 'orders', component: OrdersComponent},
+          {path: 'messages', component: MessagesComponent},
+          {path: '**', pathMatch: 'full', redirectTo: 'orders'},
+        ]
       },
       {path: '**', pathMatch: 'full', redirectTo: ''},
     ]),
@@ -75,4 +94,5 @@ import {LoginComponent} from './component/admin-page/login/login.component';
     ),
   ]
 })
-export class AppModule { }
+export class AppModule {
+}

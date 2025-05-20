@@ -28,7 +28,7 @@ public class MessageController {
 		messageRepository.add(message);
 	}
 
-	@PostMapping("/{id}")
+	@DeleteMapping("/{id}")
 	public void remove(@PathVariable int id) {
 		messageRepository.remove(id);
 	}

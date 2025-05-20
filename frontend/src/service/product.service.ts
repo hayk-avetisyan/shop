@@ -12,6 +12,6 @@ export class ProductService {
   }
 
   products(): Observable<ProductCategory[]> {
-    return this.http.get<ProductCategory[]>('/api/products', {responseType: 'json'});
+    return this.http.get<ProductCategory[]>('/api/categories', {responseType: 'json'});
   }
 }

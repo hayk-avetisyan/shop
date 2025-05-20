@@ -1,1 +1,52 @@
-<p>admin-page works!</p>
+<div class="admin-container">
+  <!-- Navigation Menu (1/5 of the width) -->
+  <div class="nav-menu">
+    <mat-accordion>
+      <!-- Orders Panel -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header [routerLink]="['/admin/orders']" [queryParams]="{done: showOrdersDone, inProgress: showOrdersInProgress}" class="clickable">
+          <mat-panel-title>Պատվերներ</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="filter-options">
+          <div class="checkbox-row" (click)="navigateToOrders(!showOrdersDone, showOrdersInProgress)">
+            <mat-checkbox [ngModel]="showOrdersDone">Ավարտված</mat-checkbox>
+          </div>
+
+          <div class="checkbox-row" (click)="navigateToOrders(showOrdersDone, !showOrdersInProgress)">
+            <mat-checkbox [ngModel]="showOrdersInProgress">Ընթացիկ</mat-checkbox>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <!-- Messages Panel -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header [routerLink]="['/admin/messages']" [queryParams]="{read: showMessagesRead, unread: showMessagesUnread}" class="clickable">
+          <mat-panel-title>Հաղորդագրություններ</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="filter-options">
+          <div class="checkbox-row" (click)="navigateToMessages(!showMessagesRead, showMessagesUnread)">
+            <mat-checkbox [(ngModel)]="showMessagesRead">Կարդացված</mat-checkbox>
+          </div>
+
+          <div class="checkbox-row" (click)="navigateToMessages(showMessagesRead, !showMessagesUnread)">
+            <mat-checkbox [(ngModel)]="showMessagesUnread">Չկարդացված</mat-checkbox>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- Logout Button -->
+    <div class="logout-container">
+      <button type="button" class="logout-button" (click)="logout()">Դուրս գալ</button>
+    </div>
+  </div>
+
+  <!-- Content Container (4/5 of the width) -->
+  <div class="content-container">
+    <mat-card>
+      <router-outlet></router-outlet>
+    </mat-card>
+  </div>
+</div>

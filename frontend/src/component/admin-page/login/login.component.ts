@@ -48,7 +48,7 @@ export class LoginComponent {
     // Call auth service
     this.authService.login(this.username, this.password)
       .subscribe({
-        complete:() => this.router.navigate(['/admin']),
+        next:() => this.router.navigate(['/admin']),
         error: () => this.loginError = 'Սխալ օգտանուն կամ գաղտնաբառ'
       });
   }

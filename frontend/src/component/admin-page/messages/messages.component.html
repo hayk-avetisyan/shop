@@ -1,0 +1,28 @@
+<div class="messages-container">
+  <h2>Հաղորդագրություններ</h2>
+
+  <div class="messages-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Անուն</th>
+          <th>Էլ․ հասցե</th>
+          <th>Հաղորդագրություն</th>
+          <th>Կարգավիճակ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of filteredMessages">
+          <td>{{ message.name }}</td>
+          <td>{{ message.email }}</td>
+          <td>{{ message.message }}</td>
+          <td>{{ message.seen ? 'Կարդացված' : 'Չկարդացված' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredMessages.length === 0" class="no-messages">
+      Ընտրված ֆիլտրերին համապատասխան հաղորդագրություններ չկան։
+    </div>
+  </div>
+</div>

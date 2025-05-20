@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Order} from '../model/order';
+import {OrderMetadata} from '../model/order-metadata';
 import {Observable} from 'rxjs';
+import {Order} from '../model/order';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,11 @@ export class OrderService {
   constructor(private http: HttpClient) {
   }
 
-  placeOrder(order: Order): Observable<void> {
+  orders(): Observable<Order[]> {
+    return this.http.get<Order[]>('/api/orders')
+  }
+
+  placeOrder(order: OrderMetadata): Observable<void> {
     return this.http.post<void>('/api/orders', order)
   }
 }

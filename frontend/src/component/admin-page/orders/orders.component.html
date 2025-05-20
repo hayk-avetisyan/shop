@@ -1,0 +1,28 @@
+<div class="orders-container">
+  <h2>Պատվերներ</h2>
+
+  <div class="orders-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Հաճախորդ</th>
+          <th>Հեռախոս</th>
+          <th>Գին</th>
+          <th>Կարգավիճակ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders">
+          <td>{{ order.contact.name }}</td>
+          <td>{{ order.contact.phone }}</td>
+          <td>{{ order.price }}</td>
+          <td>{{ order.done ? 'Ավարտված' : 'Ընթացքում' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredOrders.length === 0" class="no-orders">
+      Ընտրված ֆիլտրերին համապատասխան պատվերներ չկան։
+    </div>
+  </div>
+</div>

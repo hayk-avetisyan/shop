@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Order, OrderItem} from '../../../model/order';
+import {OrderMetadata, OrderItemMetadata} from '../../../model/order-metadata';
 import {OrderService} from '../../../service/order.service';
 import {CartItem} from '../../../model/cart-item';
 
@@ -36,7 +36,7 @@ export class PaymentPopupComponent {
   public cvv: any;
 
   public price: number;
-  public items: OrderItem[];
+  public items: OrderItemMetadata[];
 
   constructor(
     private snackBar: MatSnackBar,
@@ -56,11 +56,9 @@ export class PaymentPopupComponent {
   public pay() {
     if (this.checkValidity()) {
 
-      const order: Order = {
-        id: -1,
+      const order: OrderMetadata = {
         items: this.items,
         price: this.price,
-        done: false,
         contact: {
           name: this.cardHolder,
           phone: this.phoneNumber

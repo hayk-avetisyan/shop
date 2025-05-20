@@ -1,6 +1,6 @@
 package am.techmock.shop.repository;
 
-import am.techmock.shop.model.Order;
+import am.techmock.shop.model.order.Order;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class OrderRepository {
+
 	private final List<Order> orders = new ArrayList<>();
 	private final AtomicInteger idGenerator = new AtomicInteger(1);
 
