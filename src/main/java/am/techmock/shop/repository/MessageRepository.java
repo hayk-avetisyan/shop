@@ -5,61 +5,59 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class MessageRepository {
-	private final List<Message> messages = new ArrayList<>();
+
+	private final Map<Integer, Message> messages = new ConcurrentHashMap<>();
 	private final AtomicInteger idGenerator = new AtomicInteger(1);
 
 	public List<Message> list() {
-		return new ArrayList<>(messages);
+		return new ArrayList<>(messages.values());
 	}
 
 	public void add(Message message) {
+		int id = idGenerator.getAndIncrement();
 		Message messageWithId = new Message(
-				idGenerator.getAndIncrement(),
+				id,
 				message.name(),
 				message.email(),
 				message.message(),
 				false
 		);
-		messages.add(messageWithId);
+		messages.put(id, messageWithId);
 	}
 
 	public void remove(int id) {
-		messages.removeIf(message -> message.id() == id);
+		messages.remove(id);
 	}
 
 	public void markAsRead(int id) {
-		for (int i = 0; i < messages.size(); i++) {
-			Message message = messages.get(i);
-			if (message.id() == id) {
-				messages.set(i, new Message(
-						message.id(),
-						message.name(),
-						message.email(),
-						message.message(),
-						true
-				));
-				break;
-			}
+		Message message = messages.get(id);
+		if (message != null) {
+			messages.put(id, new Message(
+					message.id(),
+					message.name(),
+					message.email(),
+					message.message(),
+					true
+			));
 		}
 	}
 
 	public void markAsUnread(int id) {
-		for (int i = 0; i < messages.size(); i++) {
-			Message message = messages.get(i);
-			if (message.id() == id) {
-				messages.set(i, new Message(
-						message.id(),
-						message.name(),
-						message.email(),
-						message.message(),
-						false
-				));
-				break;
-			}
+		Message message = messages.get(id);
+		if (message != null) {
+			messages.put(id, new Message(
+					message.id(),
+					message.name(),
+					message.email(),
+					message.message(),
+					false
+			));
 		}
 	}
 }

@@ -19,4 +19,12 @@ export class OrderService {
   placeOrder(order: OrderMetadata): Observable<void> {
     return this.http.post<void>('/api/orders', order)
   }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/orders/${id}`)
+  }
+
+  markAsDone(id: number): Observable<void> {
+    return this.http.patch<void>(`/api/orders/${id}/done`, null)
+  }
 }

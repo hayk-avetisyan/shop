@@ -25,8 +25,8 @@ export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
 
-      this.showRead = params['read'] === 'true'
-      this.showUnread = params['unread'] !== 'false';
+      this.showRead = params['read'] === 'true' || params['read'] === undefined;
+      this.showUnread = params['unread'] !== 'false' || params['unread'] === undefined;
 
       if (this.messages.length > 0) {
         this.applyFilters();
@@ -54,16 +54,6 @@ export class MessagesComponent implements OnInit {
       }
       return false;
     });
-  }
-
-  toggleRead(): void {
-    this.showRead = !this.showRead;
-    this.applyFilters();
-  }
-
-  toggleUnread(): void {
-    this.showUnread = !this.showUnread;
-    this.applyFilters();
   }
 
   deleteMessage(message: Message): void {

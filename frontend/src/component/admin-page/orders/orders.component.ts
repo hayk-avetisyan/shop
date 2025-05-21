@@ -47,20 +47,10 @@ export class OrdersComponent implements OnInit {
       if (this.showDone && order.done) {
         return true;
       }
-      if (this.showInProgress && !order.done) {
+      else if (this.showInProgress && !order.done) {
         return true;
       }
       return false;
     });
-  }
-
-  toggleDone(): void {
-    this.showDone = !this.showDone;
-    this.applyFilters();
-  }
-
-  toggleInProgress(): void {
-    this.showInProgress = !this.showInProgress;
-    this.applyFilters();
   }
 }

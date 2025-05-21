@@ -24,10 +24,10 @@ export class MessageService {
   }
 
   markAsRead(id: number): Observable<void> {
-    return this.http.patch<void>(`/api/messages/${id}/read`, {})
+    return this.http.patch<void>(`/api/messages/${id}/read`, null)
   }
 
   markAsUnread(id: number): Observable<void> {
-    return this.http.patch<void>(`/api/messages/${id}/unread`, {})
+    return this.http.patch<void>(`/api/messages/${id}/unread`, null)
   }
 }
