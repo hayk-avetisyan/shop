@@ -9,14 +9,25 @@
           <th>Հեռախոս</th>
           <th>Գին</th>
           <th>Կարգավիճակ</th>
+          <th>Գործողություններ</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of filteredOrders">
+        <tr *ngFor="let order of filteredOrders" class="order-row">
           <td>{{ order.contact.name }}</td>
           <td>{{ order.contact.phone }}</td>
           <td>{{ order.price }}</td>
           <td>{{ order.done ? 'Ավարտված' : 'Ընթացքում' }}</td>
+          <td class="actions-cell">
+            <div class="action-buttons">
+              <button mat-icon-button color="primary" *ngIf="!order.done" (click)="markOrderAsDone(order.id)" title="Նշել որպես ավարտված">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteOrder(order.id)" title="Ջնջել">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

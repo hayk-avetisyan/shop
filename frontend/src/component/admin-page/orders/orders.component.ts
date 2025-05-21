@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../../service/order.service';
-import { Order } from '../../../model/order';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {OrderService} from '../../../service/order.service';
+import {Order} from '../../../model/order';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   standalone: false,
@@ -52,5 +52,13 @@ export class OrdersComponent implements OnInit {
       }
       return false;
     });
+  }
+
+  deleteOrder(id: number): void {
+    this.orderService.delete(id).subscribe(() => this.loadOrders());
+  }
+
+  markOrderAsDone(id: number): void {
+    this.orderService.markAsDone(id).subscribe(() => this.loadOrders());
   }
 }

@@ -8,3 +8,13 @@ export interface ProductCategory {
   coverVideo: string,
   products: Product[]
 }
+
+export interface ProductCategoryMap {
+  id: number,
+  title: string,
+  description: string,
+  coverImage: string,
+  coverVideo: string,
+  products: {[key: string]: Product}
+}
+
