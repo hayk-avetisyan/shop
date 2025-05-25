@@ -2,307 +2,285 @@ package am.techmock.shop.repository;
 
 import am.techmock.shop.model.Product;
 import am.techmock.shop.model.ProductCategory;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 @Repository
 public class ProductRepository {
-	private final Map<Integer, ProductCategory> categories = new ConcurrentHashMap<>();
-	private final AtomicInteger categoryIdGenerator = new AtomicInteger(5);
-	private final AtomicInteger productIdGenerator = new AtomicInteger(21);
 
-	public ProductRepository() {
-		List<ProductCategory> initialCategories = List.of(
-				ProductCategory.of(
-						1, "Արևածաղկի սերմեր", "Թարմ և որակյալ արևածաղկի սերմեր",
-						"media/otborniy.png", null,
-						Map.of(
-								1, Product.of(
-										1, "Սովորական", "media/otborniy.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր: Պիտանիության ժամկետը՝ 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում, օդի  25˚C ոչ բարձր ջերմաստիճանի և 75 %-ից ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 579 կկալ/2420կՋ",
-										200
-								),
-								2, Product.of(
-										2, "Բոված ծովի աղով", "media/arevacaxik-axi.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր: Պիտանիության ժամկետը՝ 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում, օդի  25˚C ոչ բարձր ջերմաստիճանի և 75 %-ից ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 579 կկալ/2420կՋ",
-										200
-								),
-								3, Product.of(
-										3, "Գծավոր բոված սերմեր ծովի աղով", "media/gcavor axi.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր, աղ: Պիտանիության ժամկետը` 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում  օդի 25˚C ոչ բարձր ջերմաստիճանի և 75%-ից ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 49.6 գ Ածխաջրեր – 19.5 գ Սպիտակուցներ – 22.8 գ Էներգետիկ արժեքը – 616 կկալ/2579կՋ",
-										350
-								),
-								4, Product.of(
-										4, "Գծավոր բոված սերմեր", "media/gcavor.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր: Պիտանիության ժամկետը` 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում  օդի 25˚C ոչ բարձր ջերմաստիճանի և 75%-ից ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 579 կկալ/2420կՋ",
-										350
-								),
-								5, Product.of(
-										5, "Աղով և առանց աղի միքս", "media/mix.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր, ծովի աղ: Պիտանիության ժամկետը` 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում օդի 25˚C  ոչ բարձր ջերմաստիճանի և 75 % ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 579 կկալ/2420կՋ",
-										350
-								),
-								6, Product.of(
-										6, "Սպիտակ բոված սերմեր ծովի աղով", "media/spitak-axi.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր, կերակրի աղ: Պիտանիության ժամկետը` 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում օդի 25 oC ոչ բարձր ջերմաստիճանի և 75 %-ից ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 34.5 գ Ածխաջրեր – 5.44 գ Սպիտակուցներ – 17.06 գ Էներգետիկ արժեքը – 386 կկալ/1659ԿՋ",
-										350
-								),
-								7, Product.of(
-										7, "«Մոլոդյոժնիե» հատընտիր բոված սերմեր", "media/molod.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր: Պիտանիության ժամկետը` 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով վայրում օդի 25˚C ջերմաստիճանից ոչ բարձր և 75 % ոչ ավել հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 579 կկալ/ 2421,82 կՋ",
-										400
-								),
-								8, Product.of(
-										8, "«Մոլոդյոժնիե» հատընտիր բոված սերմեր ծովի աղով", "media/molod-axi.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր, ծովի աղ: Պիտանիության ժամկետը` 180 օր արտադրման օրից պահման պայմանների դեպքում: Պահել չոր և զով  վայրում օդի 25˚C ոչ բարձր ջերմաստիճանի և 75 % ոչ ավել  հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52,9 գ Ածխաջրեր – 5,0 գ գ Սպիտակուցներ – 20,7 գ Էներգետիկ արժեքը – 579կկալ/ 2424կՋ",
-										400
-								),
-								9, Product.of(
-										9, "«Օսոբեննիյե» հատընտիր բոված սերմեր ծովի աղով", "media/osob.jpg",
-										"Բաղադրությունը` արևածաղկի  սերմեր: Պիտանիության ժամկետը` ոչ ավել, քան 350 օր արտադրման և փաթեթավորման օրից` պահման պայմանների դեպքում, օդի 25°C ոչ բարձր ջերմաստիճանի և 75 % ոչ ավել հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 578 կկալ/2394 կՋ",
-										420
-								),
-								10, Product.of(
-										10, "«Օսոբեննիյե» հատընտիր բոված սերմեր ծովի աղով", "media/osob-axi.png",
-										"Բաղադրությունը` արևածաղկի  սերմեր, ծովի աղ: Պիտանիության ժամկետը` ոչ ավել, քան 350 օր արտադրման և փաթեթավորման օրից` պահման պայմանների դեպքում, օդի 25°C ոչ բարձր ջերմաստիճանի և 75 % ոչ ավել հարաբերական խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր – 52.9 գ Ածխաջրեր – 5.0 գ Սպիտակուցներ – 20.7 գ Էներգետիկ արժեքը – 578 կկալ/2394 կՋ",
-										420
-								)
-						)
-				),
-				ProductCategory.of(
-						2, "Չիպսեր", "Խրթխրթան և համեղ չիպսեր",
-						"media/chips.jpg", "media/chips.mp4",
-						Map.of(
-								11, Product.of(
-										11, "Դասական", "media/chips-dasakan.png",
-										"Բաղադրությունը` կարտոֆիլի չոր պյուրե, ցորենի ալյուր, կարտոֆիլի օսլա, արևածաղկի ձեթ, խմելու ջուր, կերակրի աղ: Պիտանիության ժամկետը՝ 150 օր արտադրման օրից պահման պայմանների դեպքում: Պահել օդի 25˚C -ից ոչ բարձր ջերմաստիճանի և 75%-ից ոչ ավել խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր  — 35 գ Ածխաջրեր — 51 գ Սպիտակուցներ — 4,3 գ Էներգետիկ արժեքը — 536 կկալ/2244 կՋ",
-										200
-								),
-								12, Product.of(
-										12, "Թթվասերի", "media/chips-ttvaser.png",
-										"Բաղադրությունը` կարտոֆիլի չոր պյուրե, ցորենի ալյուր, կարտոֆիլի օսլա, արևածաղկի ձեթ, խմելու ջուր, կերակրի աղ, համալիր համային հավելում «Թթվասեր»: Պիտանիության ժամկետը՝ 150 օր արտադրման օրից պահման պայմանների դեպքում: Պահել օդի 25˚C -ից ոչ բարձր ջերմաստիճանի և 75%-ից ոչ ավել խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր — 35 գ Ածխաջրեր — 51 գ Սպիտակուցներ — 4,3 գ Էներգետիկ արժեքը — 536 կկալ/2244 կՋ",
-										200
-								),
-								13, Product.of(
-										13, "Պանրի", "media/chips-panir.png",
-										"Բաղադրությունը` կարտոֆիլի չոր պյուրե, ցորենի ալյուր, կարտոֆիլի օսլա, արևածաղկի ձեթ, խմելու ջուր, կերակրի աղ, համալիր համային հավելում «Պանիր»: Պիտանիության ժամկետը՝ 150 օր արտադրման օրից պահման պայմանների դեպքում: Պահել օդի 25˚C -ից ոչ բարձր ջերմաստիճանի և 75%-ից ոչ ավել խոնավության պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր  — 35 գ Ածխաջրեր — 51 գ Սպիտակուցներ — 4,3 գ Էներգետիկ արժեքը — 536 կկալ/2244 կՋ",
-										240
-								)
-						)
-				),
-				ProductCategory.of(
-						3, "Պահածոներ", "Որակյալ պահածոյացված մթերքներ",
-						"media/antari.png", null,
-						Map.of(
-								14, Product.of(
-										14, "Սմբուկի խավիար", "media/xaviar.png",
-										"Բաղադրությունը` սմբուկ, տոմատի մածուկ, քաղցր կարմիր պղպեղ, արևածաղկի ձեթ, գլուխ սոխ, թարմ գազար, կերակրի աղ, շաքարավազ, մաղադանոս,աղացած կարմիր կծու պղպեղ ։ Պիտանիության ժամկետը` 24 ամիս արտադրման օրից պահման պայմանները պահպանելու դեպքում: Պահել 0˚-ից մինչև +25˚C ջերմաստիճանի և 75%–ից ոչ ավել օդի հարաբերական խոնավության պայմաններում: Բացելուց հետո  պահել սառնարանում +2˚C մինչև +6˚C ջերմաստիճանի պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր — 7գ Ածխաջրեր — 12գ Սպիտակուցներ — 1գ Էներգետիկ արժեքը — 115կկալ/480կՋ",
-										550
-								),
-								15, Product.of(
-										15, "Աջիկա", "media/ajika.png",
-										"Բաղադրությունը` քաղցր կարմիր պղպեղ, տոմատի մածուկ, արևածաղկի ձեթ, կերակրի աղ, շաքարավազ, սխտոր, համեմունքներ՝ համեմի սերմ աղացած, կարմիր կծու պղպեղ աղացած: Պիտանիության ժամկետը` 24 ամիս արտադրման օրից պահման պայմանները պահպանելու դեպքում: Պահել չոր և զով տեղում 0˚-ից մինչև +25˚C  ջերմաստիճանի և 75%-ից ոչ ավել օդի հարաբերական խոնավության պայմաններում: Բացելուց հետո  պահել սառնարանում +2˚C մինչև +6˚C ջերմաստիճանի պայմաններում: Սննդային արժեքը 100 գրամում`Ճարպեր — 2գ Ածխաջրեր — 15գ Էներգետիկ արժեքը — 78կկալ/327կՋ",
-										550
-								),
-								16, Product.of(
-										16, "Տոմատի մածուկ", "media/tomat.png",
-										"Բաղադրությունը` լոլիկ: Պիտանիության ժամկետը` 24 ամիս արտադրման օրից: Պահել չոր և զով տեղում 0˚-ից մինչև +25˚C ջերմաստիճանի և 75%-ից ոչ ավել օդի  հարաբերական խոնավության պայմաններում:   Բացելուց հետո պահել սառնարանում: Սննդային արժեքը 100 գրամում` Ածխաջրեր — 15 Սպիտակուցներ — 4.8գ Էներգետիկ արժեքը — 82կկալ/343կՋ",
-										600
-								),
-								17, Product.of(
-										17, "Ախորժակ", "media/axorjak.png",
-										"Բաղադրությունը` լոլիկ, կծու ծիծակ, արևածաղկի ձեթ, կերակրի աղ, շաքարավազ, սխտոր, մաղադանոս, համեմունքներ՝ սև պղպեղ աղացած, համեմի սերմ աղացած, կարմիր կծու պղպեղ աղացած։ Պիտանիության ժամկետը` 24 ամիս արտադրման օրից պահման պայմանները պահպանելու դեպքում: Պահել 0˚-ից մինչև +25˚C ջերմաստիճանի և 75%–ից ոչ ավել օդի հարաբերական խոնավության պայմաններում: Բացելուց հետո պահել սառնարանում +2˚C մինչև +6˚C ջերմաստիճանի պայմաններում: Սննդային արժեքը 100 գրամում` Ճարպեր — 8,0գ Ածխաջրեր — 9,0գ Սպիտակուցներ — 1.5գ Էներգետիկ արժեքը — 114կկալ/477կՋ",
-										630
-								)
-						)
-				),
-				ProductCategory.of(
-						4, "Պաղպաղակ", "Համեղ և զովացուցիչ պաղպաղակ",
-						"media/acecream.png", "media/sendvich.mp4",
-						Map.of(
-								18, Product.of(
-										18, "Շոկոլադային կոն", "media/kon-shokolad.png",
-										"Բաղադրությունը՝ խմելու ջուր, շաքար, չոր կաթ, սերուցքային կարագ, կակաոյի փոշի, կայունացուցիչներ, վանիլին, գետնանուշ, վաֆլե կոն, շոկոլադե ջնարակ, վանիլին։\n" +
-												"                                        Պահել՝ -18˚C-ից ոչ բարձր ջերմաստիճանի պայմաններում: Պիտանիության ժամկետը 12 ամսից ոչ ավել արտադրման օրից՝ պահման պայմանները պահպանելու դեպքում։\n" +
-												"                                        Սննդային արժեքը 100 գրամում`\n" +
-												"                                        Սպիտակուցներ-6գ\n" +
-												"                                        ճարպեր- 11,5գ\n" +
-												"                                        Ածխաջրեր- 36գ\n" +
-												"                                        Էներգետիկ արժեքը-271կկալ /1135կՋ\n" +
-												"                                        Յուղի զանգվածային բաժինը կաթնային մասում՝ 5,4%",
-										320
-								),
-								19, Product.of(
-										19, "Վանիլային կոն", "media/kon-vanil.png",
-										"Բաղադրությունը՝ խմելու ջուր, շաքար, չոր կաթ, սերուցքային կարագ,  կայունացուցիչներ, վանիլին, գետնանուշ, վաֆլե կոն, շոկոլադե ջնարակ, վանիլին։ Պահել՝ -18˚C ջերմաստիճանի պայմաններում: Պիտանիության ժամկետը 12 ամսից ոչ ավել արտադրման օրից՝ պահման պայմանները պահպանելու դեպքում։\n" +
-												"                                            Սննդային արժեքը 100 գրամում`\n" +
-												"                                            Սպիտակուցներ-5,5գ\n" +
-												"                                            ճարպեր- 11,2գ\n" +
-												"                                            Ածխաջրեր-36,7գ\n" +
-												"                                            Էներգետիկ արժեքը-270կկալ /1130կՋ\n" +
-												"                                            Յուղի զանգվածային բաժինը կաթնային մասում՝ 5,2%",
-										320
-								),
-								20, Product.of(
-										20, "Շոկոլադային բրիկետ", "media/briket-shoko.png",
-										"Բաղադրությունը` խմելու ջուր, շաքար, չոր անարատ կաթ, չոր յուղազերծ կաթ, սերուցքային կարագ, կակաոյի փոշի, կայունացուցիչներ, էմուլգատոր: Պահել՝ -18° C-ից ոչ բարձր ջերմաստիճանի պայմաններում: Պիտանիության ժամկետը 12 ամսից ոչ ավել արտադրման օրից՝ պահման պայմանները պահպանելու դեպքում:\n" +
-												"                                                Սննդային արժեքը 100 գրամում`\n" +
-												"                                                Սպիտակուցներ-4,8գ\n" +
-												"                                                ճարպեր- 5,4գ\n" +
-												"                                                Ածխաջրեր-25գ\n" +
-												"                                                Էներգետիկ արժեքը-168կկալ /703կՋ\n" +
-												"                                                Յուղի զանգվածային բաժինը կաթնային մասում՝ 5,4%",
-										350
-								)
-						)
-				)
-		);
+    private final NamedParameterJdbcTemplate queryTemplate;
 
-		// Initialize the map with the initial categories
-		for (ProductCategory category : initialCategories) {
-			categories.put(category.id(), category);
-		}
-	}
+    public ProductRepository(DataSource dataSource) {
+        queryTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
 
-	public List<ProductCategory> list() {
-		return new ArrayList<>(categories.values());
-	}
+    public List<ProductCategory> list() {
+        String sql = "SELECT id, title, description, cover_image, cover_video FROM product_category";
+        
+        List<ProductCategory> categories = queryTemplate.query(sql, (rs, rowNum) -> {
+            int categoryId = rs.getInt("id");
+            return ProductCategory.of(
+                    categoryId,
+                    rs.getString("title"),
+                    rs.getString("description"),
+                    rs.getString("cover_image"),
+                    rs.getString("cover_video"),
+                    getProductsForCategory(categoryId)
+            );
+        });
+        
+        return categories;
+    }
 
-	public Optional<ProductCategory> getCategoryById(int id) {
-		return Optional.ofNullable(categories.get(id));
-	}
+    private Map<Integer, Product> getProductsForCategory(int categoryId) {
+        String sql = "SELECT p.id, p.title, p.image, p.description, p.price " +
+                "FROM product p " +
+                "JOIN product_category_mapping pcm ON p.id = pcm.product_id " +
+                "WHERE pcm.category_id = :categoryId";
+        
+        Map<Integer, Product> products = new LinkedHashMap<>();
+        
+        queryTemplate.query(
+                sql,
+                new MapSqlParameterSource("categoryId", categoryId),
+                (rs, rowNum) -> {
+                    int productId = rs.getInt("id");
+                    Product product = Product.of(
+                            productId,
+                            rs.getString("title"),
+                            rs.getString("image"),
+                            rs.getString("description"),
+                            rs.getInt("price")
+                    );
+                    products.put(productId, product);
+                    return null;
+                }
+        );
+        
+        return products;
+    }
 
-	public ProductCategory addCategory(ProductCategory category) {
-		int id = categoryIdGenerator.getAndIncrement();
-		ProductCategory categoryWithId = ProductCategory.of(
-				id,
-				category.title(),
-				category.description(),
-				category.coverImage(),
-				category.coverVideo(),
-				emptyProductMap()
-		);
-		categories.put(id, categoryWithId);
-		return categoryWithId;
-	}
+    public Optional<ProductCategory> getCategoryById(int id) {
+        String sql = "SELECT id, title, description, cover_image, cover_video FROM product_category WHERE id = :id";
+        
+        List<ProductCategory> categories = queryTemplate.query(
+                sql,
+                new MapSqlParameterSource("id", id),
+                (rs, rowNum) -> ProductCategory.of(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getString("cover_image"),
+                        rs.getString("cover_video"),
+                        getProductsForCategory(id)
+                )
+        );
+        
+        return categories.isEmpty() ? Optional.empty() : Optional.of(categories.get(0));
+    }
 
-	public void removeCategory(int id) {
-		categories.remove(id);
-	}
+    public ProductCategory addCategory(ProductCategory category) {
+        String sql = "INSERT INTO product_category (title, description, cover_image, cover_video) " +
+                "VALUES (:title, :description, :coverImage, :coverVideo)";
+        
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("title", category.title())
+                .addValue("description", category.description())
+                .addValue("coverImage", category.coverImage())
+                .addValue("coverVideo", category.coverVideo());
+        
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        queryTemplate.update(sql, params, keyHolder);
+        
+        int id = keyHolder.getKey().intValue();
+        
+        return ProductCategory.of(
+                id,
+                category.title(),
+                category.description(),
+                category.coverImage(),
+                category.coverVideo(),
+                new LinkedHashMap<>()
+        );
+    }
 
-	public boolean updateCategory(int id, ProductCategory category) {
-		if (categories.containsKey(id)) {
-			ProductCategory existingCategory = categories.get(id);
-			ProductCategory newCategory = ProductCategory.of(
-					id,
-					category.title(),
-					category.description(),
-					category.coverImage(),
-					category.coverVideo(),
-					existingCategory.products()
-			);
-			categories.put(id, newCategory);
-			return true;
-		}
-		return false;
-	}
+    public void removeCategory(int id) {
+        // Due to foreign key constraints with ON DELETE CASCADE,
+        // deleting the category will automatically delete related mappings
+        String sql = "DELETE FROM product_category WHERE id = :id";
+        
+        queryTemplate.update(
+                sql,
+                new MapSqlParameterSource("id", id)
+        );
+    }
 
-	// Helper method to create an empty product map
-	public Stream<Product> getProductById(int id) {
-		return categories.values().stream()
-				.filter(category -> category.products().containsKey(id))
-				.map(category -> category.products().get(id));
-	}
+    public boolean updateCategory(int id, ProductCategory category) {
+        String sql = "UPDATE product_category " +
+                "SET title = :title, description = :description, cover_image = :coverImage, cover_video = :coverVideo " +
+                "WHERE id = :id";
+        
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("id", id)
+                .addValue("title", category.title())
+                .addValue("description", category.description())
+                .addValue("coverImage", category.coverImage())
+                .addValue("coverVideo", category.coverVideo());
+        
+        int rowsAffected = queryTemplate.update(sql, params);
+        
+        return rowsAffected > 0;
+    }
 
-	public boolean addProductToCategory(int categoryId, Product product) {
-		if (categories.containsKey(categoryId)) {
-			ProductCategory category = categories.get(categoryId);
-			Product productWithId = Product.of(
-					productIdGenerator.getAndIncrement(),
-					product.title(),
-					product.image(),
-					product.description(),
-					product.price()
-			);
-			Map<Integer, Product> updatedProducts = new LinkedHashMap<>(category.products());
-			updatedProducts.put(productWithId.id(), productWithId);
+    public Stream<Product> getProductById(int id) {
+        String sql = "SELECT id, title, image, description, price FROM product WHERE id = :id";
+        
+        List<Product> products = queryTemplate.query(
+                sql,
+                new MapSqlParameterSource("id", id),
+                (rs, rowNum) -> Product.of(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("image"),
+                        rs.getString("description"),
+                        rs.getInt("price")
+                )
+        );
+        
+        return products.stream();
+    }
 
-			ProductCategory updatedCategory = ProductCategory.of(
-					category.id(),
-					category.title(),
-					category.description(),
-					category.coverImage(),
-					category.coverVideo(),
-					updatedProducts
-			);
+    public boolean addProductToCategory(int categoryId, Product product) {
+        // First, check if the category exists
+        String checkCategorySql = "SELECT COUNT(*) FROM product_category WHERE id = :id";
+        
+        Integer categoryCount = queryTemplate.queryForObject(
+                checkCategorySql,
+                new MapSqlParameterSource("id", categoryId),
+                Integer.class
+        );
+        
+        if (categoryCount == null || categoryCount == 0) {
+            return false;
+        }
+        
+        // Insert the product
+        String insertProductSql = "INSERT INTO product (title, image, description, price) " +
+                "VALUES (:title, :image, :description, :price)";
+        
+        MapSqlParameterSource productParams = new MapSqlParameterSource()
+                .addValue("title", product.title())
+                .addValue("image", product.image())
+                .addValue("description", product.description())
+                .addValue("price", product.price());
+        
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        queryTemplate.update(insertProductSql, productParams, keyHolder);
+        
+        int productId = keyHolder.getKey().intValue();
+        
+        // Create the mapping between product and category
+        String insertMappingSql = "INSERT INTO product_category_mapping (product_id, category_id) " +
+                "VALUES (:productId, :categoryId)";
+        
+        MapSqlParameterSource mappingParams = new MapSqlParameterSource()
+                .addValue("productId", productId)
+                .addValue("categoryId", categoryId);
+        
+        queryTemplate.update(insertMappingSql, mappingParams);
+        
+        return true;
+    }
 
-			categories.put(categoryId, updatedCategory);
-			return true;
-		}
-		return false;
-	}
+    public boolean updateProduct(int categoryId, int productId, Product product) {
+        // First, check if the product exists and belongs to the category
+        String checkProductSql = "SELECT COUNT(*) FROM product_category_mapping " +
+                "WHERE product_id = :productId AND category_id = :categoryId";
+        
+        Integer productCount = queryTemplate.queryForObject(
+                checkProductSql,
+                new MapSqlParameterSource()
+                        .addValue("productId", productId)
+                        .addValue("categoryId", categoryId),
+                Integer.class
+        );
+        
+        if (productCount == null || productCount == 0) {
+            return false;
+        }
+        
+        // Update the product
+        String updateProductSql = "UPDATE product " +
+                "SET title = :title, image = :image, description = :description, price = :price " +
+                "WHERE id = :id";
+        
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("id", productId)
+                .addValue("title", product.title())
+                .addValue("image", product.image())
+                .addValue("description", product.description())
+                .addValue("price", product.price());
+        
+        int rowsAffected = queryTemplate.update(updateProductSql, params);
+        
+        return rowsAffected > 0;
+    }
 
-	public boolean updateProduct(int categoryId, int productId, Product product) {
-		if (categories.containsKey(categoryId)) {
-			ProductCategory category = categories.get(categoryId);
-			Map<Integer, Product> products = category.products();
-
-			if (products.containsKey(productId)) {
-				Map<Integer, Product> updatedProducts = new LinkedHashMap<>(products);
-				updatedProducts.put(productId, Product.of(
-						productId,
-						product.title(),
-						product.image(),
-						product.description(),
-						product.price()
-				));
-
-				ProductCategory updatedCategory = ProductCategory.of(
-						category.id(),
-						category.title(),
-						category.description(),
-						category.coverImage(),
-						category.coverVideo(),
-						updatedProducts
-				);
-
-				categories.put(categoryId, updatedCategory);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean removeProductFromCategory(int categoryId, int productId) {
-		if (categories.containsKey(categoryId)) {
-			ProductCategory category = categories.get(categoryId);
-			Map<Integer, Product> products = category.products();
-
-			if (products.containsKey(productId)) {
-				Map<Integer, Product> updatedProducts = new LinkedHashMap<>(products);
-				updatedProducts.remove(productId);
-
-				ProductCategory updatedCategory = ProductCategory.of(
-						category.id(),
-						category.title(),
-						category.description(),
-						category.coverImage(),
-						category.coverVideo(),
-						updatedProducts
-				);
-
-				categories.put(categoryId, updatedCategory);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private Map<Integer, Product> emptyProductMap() {
-		return new LinkedHashMap<>();
-	}
+    public boolean removeProductFromCategory(int categoryId, int productId) {
+        // First, check if the product exists and belongs to the category
+        String checkProductSql = "SELECT COUNT(*) FROM product_category_mapping " +
+                "WHERE product_id = :productId AND category_id = :categoryId";
+        
+        Integer productCount = queryTemplate.queryForObject(
+                checkProductSql,
+                new MapSqlParameterSource()
+                        .addValue("productId", productId)
+                        .addValue("categoryId", categoryId),
+                Integer.class
+        );
+        
+        if (productCount == null || productCount == 0) {
+            return false;
+        }
+        
+        // Remove the mapping between product and category
+        String deleteMappingSql = "DELETE FROM product_category_mapping " +
+                "WHERE product_id = :productId AND category_id = :categoryId";
+        
+        queryTemplate.update(
+                deleteMappingSql,
+                new MapSqlParameterSource()
+                        .addValue("productId", productId)
+                        .addValue("categoryId", categoryId)
+        );
+        
+        // Check if the product is still associated with any category
+        String checkOtherMappingsSql = "SELECT COUNT(*) FROM product_category_mapping " +
+                "WHERE product_id = :productId";
+        
+        Integer otherMappingsCount = queryTemplate.queryForObject(
+                checkOtherMappingsSql,
+                new MapSqlParameterSource("productId", productId),
+                Integer.class
+        );
+        
+        // If the product is not associated with any category, delete it
+        if (otherMappingsCount != null && otherMappingsCount == 0) {
+            String deleteProductSql = "DELETE FROM product WHERE id = :id";
+            
+            queryTemplate.update(
+                    deleteProductSql,
+                    new MapSqlParameterSource("id", productId)
+            );
+        }
+        
+        return true;
+    }
 }
