@@ -1,0 +1,49 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+mat-dialog-content {
+  padding-top: 16px;
+  min-width: 300px;
+}
+
+mat-dialog-actions {
+  margin-top: 16px;
+  padding-bottom: 16px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.image-upload-container {
+  margin-bottom: 5px;
+  display: flex;
+
+  .image-error {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+  }
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 18px;
+
+  &:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}

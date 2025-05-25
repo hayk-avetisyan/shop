@@ -35,7 +35,8 @@ import {OrdersComponent} from './component/admin-page/orders/orders.component';
 import {MessagesComponent} from './component/admin-page/messages/messages.component';
 import {FileUploadComponent} from './component/admin-page/file-upload/file-upload.component';
 import {ProductsComponent} from './component/admin-page/products/products.component';
-import {PageEditPopupComponent} from './component/admin-page/products/page-edit-popup/page-edit-popup.component';
+import {ProductEditPopupComponent} from './component/admin-page/products/product-edit-popup/product-edit-popup.component';
+import {ProductAddPopupComponent} from './component/admin-page/products/product-add-popup/product-add-popup.component';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import {PageEditPopupComponent} from './component/admin-page/products/page-edit-
     MessagesComponent,
     FileUploadComponent,
     ProductsComponent,
-    PageEditPopupComponent
+    ProductEditPopupComponent,
+    ProductAddPopupComponent
   ],
   bootstrap: [AppComponent],
   providers: [

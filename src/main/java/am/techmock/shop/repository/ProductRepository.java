@@ -12,8 +12,8 @@ import java.util.stream.Stream;
 @Repository
 public class ProductRepository {
 	private final Map<Integer, ProductCategory> categories = new ConcurrentHashMap<>();
-	private final AtomicInteger categoryIdGenerator = new AtomicInteger(9); // Start from 9 to avoid conflicts with existing IDs
-	private final AtomicInteger productIdGenerator = new AtomicInteger(21); // Start from 21 to avoid conflicts with existing IDs
+	private final AtomicInteger categoryIdGenerator = new AtomicInteger(5);
+	private final AtomicInteger productIdGenerator = new AtomicInteger(21);
 
 	public ProductRepository() {
 		List<ProductCategory> initialCategories = List.of(
@@ -159,26 +159,6 @@ public class ProductRepository {
 										350
 								)
 						)
-				),
-				ProductCategory.of(
-						5, "Գարեջուր", "Համեղ և զովացուցիչ պաղպաղակ",
-						"media/garejur.png", null,
-						emptyProductMap()
-				),
-				ProductCategory.of(
-						6, "Մակարոն", "Թարմ և որակյալ պաղպաղակ",
-						"media/makaron.jpg", null,
-						emptyProductMap()
-				),
-				ProductCategory.of(
-						7, "Պոպկորն", "Թարմ և որակյալ պոպկորն",
-						"media/popcorn.png", null,
-						emptyProductMap()
-				),
-				ProductCategory.of(
-						8, "Քաղցր ձողիկներ", "Խրթխրթան և համեղ ձողիկներ",
-						"media/dzoxik.png", null,
-						emptyProductMap()
 				)
 		);
 

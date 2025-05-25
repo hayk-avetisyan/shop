@@ -3,7 +3,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {ProductService} from '../../../service/product.service';
 import {ProductCategory} from '../../../model/product-category';
 import {Product} from '../../../model/product';
-import {PageEditPopupComponent} from './page-edit-popup/page-edit-popup.component';
+import {ProductEditPopupComponent} from './product-edit-popup/product-edit-popup.component';
+import {ProductAddPopupComponent} from './product-add-popup/product-add-popup.component';
 
 @Component({
   standalone: false,
@@ -44,7 +45,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
 
-    this.dialog.open(PageEditPopupComponent, {
+    this.dialog.open(ProductEditPopupComponent, {
       width: '500px',
       minWidth: '500px',
       data: {
@@ -53,10 +54,10 @@ export class ProductsComponent implements OnInit {
       }
     })
       .afterClosed().subscribe(result => {
-        if (result) {
-          this.loadProducts();
-        }
-      });
+      if (result) {
+        this.loadProducts();
+      }
+    });
   }
 
   private loadProducts() {
@@ -72,5 +73,22 @@ export class ProductsComponent implements OnInit {
     if (!this.selectedCategory) {
       this.selectedCategory = this.categories[0];
     }
+  }
+
+  addProduct() {
+
+    if (!this.selectedCategory) {
+      return;
+    }
+
+    this.dialog.open(ProductAddPopupComponent, {
+      width: '500px',
+      minWidth: '500px',
+      data: this.selectedCategory.id
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.loadProducts();
+      }
+    });
   }
 }

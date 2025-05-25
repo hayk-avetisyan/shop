@@ -12,18 +12,18 @@ interface DialogData {
 
 @Component({
   standalone: false,
-  selector: 'shop-page-edit-popup',
-  templateUrl: './page-edit-popup.component.html',
-  styleUrl: './page-edit-popup.component.scss'
+  selector: 'shop-product-edit-popup',
+  templateUrl: './product-edit-popup.component.html',
+  styleUrl: './product-edit-popup.component.scss'
 })
-export class PageEditPopupComponent {
+export class ProductEditPopupComponent {
   productForm: FormGroup;
   categoryId: number;
   product: Product;
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<PageEditPopupComponent>,
+    private dialogRef: MatDialogRef<ProductEditPopupComponent>,
     private productService: ProductService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: DialogData

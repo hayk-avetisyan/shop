@@ -22,6 +22,10 @@ export class ProductService {
     return this.http.put<void>(`/api/categories/${categoryId}/products/${product.id}`, product)
   }
 
+  add(categoryId: number, product: Product): Observable<void> {
+    return this.http.post<void>(`/api/categories/${categoryId}/products`, product)
+  }
+
   remove(categoryId: number, productId: number): Observable<void> {
     return this.http.delete<void>(`/api/categories/${categoryId}/products/${productId}`)
   }
