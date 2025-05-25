@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>Խմբագրել ապրանքը</h2>
+
+<form [formGroup]="productForm">
+  <mat-dialog-content>
+    <input type="hidden" formControlName="id">
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Անվանում</mat-label>
+      <input matInput formControlName="title" required>
+      <mat-error *ngIf="productForm.get('title')?.hasError('required')">
+        Անվանումը պարտադիր է
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Նկարագրություն</mat-label>
+      <textarea matInput formControlName="description" rows="4" required></textarea>
+      <mat-error *ngIf="productForm.get('description')?.hasError('required')">
+        Նկարագրությունը պարտադիր է
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Գին</mat-label>
+      <input matInput type="number" formControlName="price" required>
+      <mat-error *ngIf="productForm.get('price')?.hasError('required')">
+        Գինը պարտադիր է
+      </mat-error>
+      <mat-error *ngIf="productForm.get('price')?.hasError('min')">
+        Գինը պետք է լինի 0-ից մեծ կամ հավասար
+      </mat-error>
+    </mat-form-field>
+
+    <div class="image-upload-container">
+      <shop-file-upload
+        label="Ապրանքի նկար"
+        fileType="image/*"
+        [file]="product.image"
+        (fileChange)="onFileUploaded($event)">
+      </shop-file-upload>
+      <input type="hidden" formControlName="image">
+    </div>
+    <mat-error *ngIf="productForm.get('image')?.hasError('required')" class="image-error">
+      Ապրանքի նկարը պարտադիր է
+    </mat-error>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Չեղարկել</button>
+    <button class="submit-button" type="submit" [disabled]="productForm.invalid" (click)="onSubmit()">Պահպանել</button>
+  </mat-dialog-actions>
+</form>

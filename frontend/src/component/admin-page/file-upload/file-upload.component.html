@@ -1,0 +1,56 @@
+<input
+  type="file"
+  #fileInput
+  style="display: none"
+  [accept]="fileType"
+  (change)="onFileSelected($event)"
+/>
+
+@if (isImage) {
+
+  <div class="image-box" (click)="fileInput.click()">
+
+    @if (!selectedFile && !uploading && !uploadedFilePath) {
+
+      <button mat-icon-button color="primary" class="select-image-button">
+        <mat-icon>add</mat-icon>
+      </button>
+
+    }
+
+    @if (uploading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
+    @if (uploadedFilePath && !uploading) {
+
+      <div class="image-preview">
+        <img [src]="uploadedFilePath" alt="Uploaded image"/>
+      </div>
+
+    }
+
+  </div>
+}
+
+<div class="description" (click)="fileInput.click()">
+
+  @if (label) {
+    <div class="label">{{ label }}</div>
+  }
+
+  <div class="details">
+    @if (selectedFile) {
+      <span>{{ selectedFile.name }}</span>
+      <span>{{ fileSize() }}</span>
+    }
+  </div>
+
+
+</div>
+<div class="clear-button">
+  @if (selectedFile) {
+    <i class="material-icons" (click)="clearSelection(); fileInput.value = ''">close</i>
+  }
+
+</div>

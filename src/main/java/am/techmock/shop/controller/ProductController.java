@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController()
-@RequestMapping("/api")
+@RequestMapping("/api/categories")
 public class ProductController {
 
     private final ProductRepository productRepository;
@@ -22,31 +22,31 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/categories")
+    @GetMapping()
     public List<ProductCategory> getAllProducts() {
         return productRepository.list();
     }
 
-    @GetMapping("/categories/{id}")
+    @PostMapping()
+    public ResponseEntity<ProductCategory> addCategory(@RequestBody ProductCategory category) {
+        ProductCategory newCategory = productRepository.addCategory(category);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCategory);
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<ProductCategory> getCategoryById(@PathVariable int id) {
         Optional<ProductCategory> category = productRepository.getCategoryById(id);
         return category.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/categories")
-    public ResponseEntity<ProductCategory> addCategory(@RequestBody ProductCategory category) {
-        ProductCategory newCategory = productRepository.addCategory(category);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newCategory);
-    }
-
-    @DeleteMapping("/categories/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeCategory(@PathVariable int id) {
         productRepository.removeCategory(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/categories/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ProductCategory> updateCategory(@PathVariable int id, @RequestBody ProductCategory category) {
         boolean updated = productRepository.updateCategory(id, category);
         if (updated) {
@@ -57,7 +57,7 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/categories/{categoryId}/products")
+    @PostMapping("/{categoryId}/products")
     public ResponseEntity<Void> addProductToCategory(@PathVariable int categoryId, @RequestBody Product product) {
         boolean added = productRepository.addProductToCategory(categoryId, product);
         if (added) {
@@ -66,7 +66,7 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/categories/{categoryId}/products/{productId}")
+    @PutMapping("/{categoryId}/products/{productId}")
     public ResponseEntity<Void> updateProduct(@PathVariable int categoryId, @PathVariable int productId, @RequestBody Product product) {
         boolean updated = productRepository.updateProduct(categoryId, productId, product);
         if (updated) {
@@ -75,7 +75,7 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/categories/{categoryId}/products/{productId}")
+    @DeleteMapping("/{categoryId}/products/{productId}")
     public ResponseEntity<Void> removeProductFromCategory(@PathVariable int categoryId, @PathVariable int productId) {
         boolean removed = productRepository.removeProductFromCategory(categoryId, productId);
         if (removed) {

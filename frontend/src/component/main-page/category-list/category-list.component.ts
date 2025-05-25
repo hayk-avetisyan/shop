@@ -22,7 +22,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.productService.products().subscribe(categories => {
+    this.productService.categories().subscribe(categories => {
       this.categories = categories.filter(category => category.products.length);
     });
   }

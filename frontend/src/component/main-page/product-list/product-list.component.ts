@@ -21,8 +21,8 @@ export class ProductListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.productService.products().subscribe(products => {
-      this.products = products.flatMap(product => product.products);
+    this.productService.categories().subscribe(categories => {
+      this.products = categories.flatMap(product => product.products);
     });
   }
 

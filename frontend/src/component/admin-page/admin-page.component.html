@@ -2,6 +2,7 @@
   <!-- Navigation Menu (1/5 of the width) -->
   <div class="nav-menu">
     <mat-accordion>
+
       <!-- Orders Panel -->
       <mat-expansion-panel>
         <mat-expansion-panel-header [routerLink]="['/admin/orders']" [queryParams]="{done: showOrdersDone, inProgress: showOrdersInProgress}" class="clickable">
@@ -36,6 +37,13 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
+
+    <!-- Messages Panel -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header [routerLink]="['/admin/products']" class="clickable">
+        <mat-panel-title>Ապրանքներ</mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
 
     <!-- Logout Button -->
     <div class="logout-container">

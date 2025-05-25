@@ -1,0 +1,32 @@
+
+<div class="category-selector">
+  <label for="categorySelect">Ընտրեք կատեգորիան: </label>
+  <select id="categorySelect" #categorySelect (change)="selectCategory(+categorySelect.value)">
+    @for (category of categories; track category.id) {
+      <option [value]="category.id" [selected]="selectedCategory?.id === category.id">{{ category.title }}</option>
+    }
+  </select>
+</div>
+
+<div class="product-list">
+
+  @for (product of products; track product.title) {
+
+    <div class="product">
+      <div class="action-buttons">
+        <button mat-icon-button (click)="remove(product.id)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-icon-button (click)="edit(product)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <img [src]="product.image" [alt]="product.title">
+      <div>
+        <h3>{{ product.title }}</h3>
+      </div>
+    </div>
+
+  }
+
+</div>
