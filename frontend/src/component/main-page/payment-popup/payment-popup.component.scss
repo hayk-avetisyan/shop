@@ -1,12 +1,13 @@
-:host {
-
-}
-
 .modal-content {
   background-color: #fff;
   border-radius: 8px;
   text-align: center;
   padding: 30px;
+
+  .scrollable {
+    height: 400px;
+    overflow-y: auto;
+  }
 
   h3 {
     font-size: 24px;

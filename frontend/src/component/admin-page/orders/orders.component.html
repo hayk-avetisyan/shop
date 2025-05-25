@@ -5,8 +5,9 @@
     <table>
       <thead>
         <tr>
-          <th>Հաճախորդ</th>
+          <th>Պատվիրատու</th>
           <th>Հեռախոս</th>
+          <th>Հասցե</th>
           <th>Գին</th>
           <th>Կարգավիճակ</th>
           <th>Գործողություններ</th>
@@ -16,6 +17,7 @@
         <tr *ngFor="let order of filteredOrders" class="order-row">
           <td>{{ order.contact.name }}</td>
           <td>{{ order.contact.phone }}</td>
+          <td>{{ order.contact.address }}</td>
           <td>{{ order.price }}</td>
           <td>{{ order.done ? 'Ավարտված' : 'Ընթացքում' }}</td>
           <td class="actions-cell">

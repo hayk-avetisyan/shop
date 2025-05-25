@@ -6,6 +6,7 @@ export interface Order {
   contact: {
     name: string,
     phone: string,
+    address: string,
   }
   done: boolean
   price: number

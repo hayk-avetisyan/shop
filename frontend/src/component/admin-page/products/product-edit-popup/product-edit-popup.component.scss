@@ -6,6 +6,11 @@
 mat-dialog-content {
   padding-top: 16px;
   min-width: 300px;
+
+  &.scrollable-content {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
 }
 
 mat-dialog-actions {

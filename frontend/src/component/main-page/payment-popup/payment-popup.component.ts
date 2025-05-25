@@ -25,6 +25,7 @@ export class PaymentPopupComponent {
   public cardNumberMessage: string = '';
   public cardHolderMessage: string = '';
   public phoneNumberMessage: string = '';
+  public addressMessage: string = '';
   public expiryDateMessage: string = '';
   public cvvMessage: string = '';
   public valid: boolean = false;
@@ -32,6 +33,7 @@ export class PaymentPopupComponent {
   public cardNumber: any;
   public cardHolder: any;
   public phoneNumber: any;
+  public address: any;
   public expiryDate: any;
   public cvv: any;
 
@@ -61,7 +63,8 @@ export class PaymentPopupComponent {
         price: this.price,
         contact: {
           name: this.cardHolder,
-          phone: this.phoneNumber
+          phone: this.phoneNumber,
+          address: this.address
         }
       };
 
@@ -84,6 +87,11 @@ export class PaymentPopupComponent {
   changePhoneNumber(data: any) {
     this.phoneNumber = data;
     this.phoneNumberMessage = '';
+  }
+
+  changeAddress(data: any) {
+    this.address = data;
+    this.addressMessage = '';
   }
 
   changeCardHolder(data: any) {
@@ -110,9 +118,10 @@ export class PaymentPopupComponent {
     this.checkCardNumber();
     this.checkPhoneNumber();
     this.checkCardHolder();
+    this.checkAddress();
     this.checkExpiryDate();
     this.checkCvvNumber();
-    this.valid = !this.cardHolderMessage && !this.cardNumberMessage && !this.expiryDateMessage && !this.cvvMessage
+    this.valid = !this.cardHolderMessage && !this.cardNumberMessage && !this.addressMessage && !this.expiryDateMessage && !this.cvvMessage && !this.phoneNumberMessage;
     return this.valid;
   }
 
@@ -126,6 +135,11 @@ export class PaymentPopupComponent {
     const input = this.checkInput(this.phoneNumber)
     const matches = this.phoneNumberRegex.test(input);
     this.phoneNumberMessage = !matches ? 'Մուտքագրեք ճիշտ հեռախոսահամար - 077123456:' : '';
+  }
+
+  private checkAddress() {
+    const input = this.checkInput(this.address);
+    this.addressMessage = !input ? 'Մուտքագրեք հասցե:' : '';
   }
 
   private checkCardNumber() {

@@ -3,6 +3,7 @@ export interface OrderMetadata {
   contact: {
     name: string,
     phone: string,
+    address: string,
   }
   price: number
 }
