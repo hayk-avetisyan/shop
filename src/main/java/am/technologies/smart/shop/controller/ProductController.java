@@ -1,8 +1,8 @@
-package am.techmock.shop.controller;
+package am.technologies.smart.shop.controller;
 
-import am.techmock.shop.model.Product;
-import am.techmock.shop.model.ProductCategory;
-import am.techmock.shop.repository.ProductRepository;
+import am.technologies.smart.shop.model.Product;
+import am.technologies.smart.shop.model.ProductCategory;
+import am.technologies.smart.shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

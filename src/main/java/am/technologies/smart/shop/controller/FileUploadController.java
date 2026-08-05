@@ -1,4 +1,4 @@
-package am.techmock.shop.controller;
+package am.technologies.smart.shop.controller;
 
 import am.technologies.smart.springkit.util.tuple.Tuple;
 import am.technologies.smart.springkit.util.tuple.Tuple2;

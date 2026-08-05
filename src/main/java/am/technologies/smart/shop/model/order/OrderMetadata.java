@@ -1,6 +1,6 @@
-package am.techmock.shop.model.order;
+package am.technologies.smart.shop.model.order;
 
-import am.techmock.shop.model.OrderContact;
+import am.technologies.smart.shop.model.OrderContact;
 
 import java.util.List;
 

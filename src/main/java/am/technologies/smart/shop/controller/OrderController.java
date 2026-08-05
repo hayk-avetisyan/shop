@@ -1,11 +1,11 @@
-package am.techmock.shop.controller;
+package am.technologies.smart.shop.controller;
 
-import am.techmock.shop.model.order.Order;
-import am.techmock.shop.model.order.OrderItem;
-import am.techmock.shop.model.order.OrderItemMetadata;
-import am.techmock.shop.model.order.OrderMetadata;
-import am.techmock.shop.repository.OrderRepository;
-import am.techmock.shop.repository.ProductRepository;
+import am.technologies.smart.shop.model.order.Order;
+import am.technologies.smart.shop.model.order.OrderItem;
+import am.technologies.smart.shop.model.order.OrderItemMetadata;
+import am.technologies.smart.shop.model.order.OrderMetadata;
+import am.technologies.smart.shop.repository.OrderRepository;
+import am.technologies.smart.shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

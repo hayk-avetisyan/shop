@@ -1,4 +1,4 @@
-package am.techmock.shop.model.order;
+package am.technologies.smart.shop.model.order;
 
 public record OrderItemMetadata(
 		int productId,

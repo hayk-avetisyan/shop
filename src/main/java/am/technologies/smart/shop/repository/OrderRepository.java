@@ -1,9 +1,9 @@
-package am.techmock.shop.repository;
+package am.technologies.smart.shop.repository;
 
-import am.techmock.shop.model.OrderContact;
-import am.techmock.shop.model.Product;
-import am.techmock.shop.model.order.Order;
-import am.techmock.shop.model.order.OrderItem;
+import am.technologies.smart.shop.model.OrderContact;
+import am.technologies.smart.shop.model.Product;
+import am.technologies.smart.shop.model.order.Order;
+import am.technologies.smart.shop.model.order.OrderItem;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

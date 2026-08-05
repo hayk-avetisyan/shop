@@ -1,7 +1,7 @@
-package am.techmock.shop.repository;
+package am.technologies.smart.shop.repository;
 
-import am.techmock.shop.model.Product;
-import am.techmock.shop.model.ProductCategory;
+import am.technologies.smart.shop.model.Product;
+import am.technologies.smart.shop.model.ProductCategory;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

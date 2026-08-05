@@ -1,4 +1,4 @@
-package am.techmock.shop.model;
+package am.technologies.smart.shop.model;
 
 public record OrderContact(
 		String name,

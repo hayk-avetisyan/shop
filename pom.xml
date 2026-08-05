@@ -10,7 +10,7 @@
 		<relativePath/>
 	</parent>
 	
-	<groupId>am.techmock.swbp</groupId>
+	<groupId>am.technologies.smart</groupId>
 	<artifactId>shop</artifactId>
 	<version>1.2.1</version>
 	

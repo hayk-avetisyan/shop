@@ -1,7 +1,7 @@
-package am.techmock.shop.controller;
+package am.technologies.smart.shop.controller;
 
-import am.techmock.shop.model.Message;
-import am.techmock.shop.repository.MessageRepository;
+import am.technologies.smart.shop.model.Message;
+import am.technologies.smart.shop.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

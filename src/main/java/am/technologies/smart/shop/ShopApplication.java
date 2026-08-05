@@ -1,4 +1,4 @@
-package am.techmock.shop;
+package am.technologies.smart.shop;
 
 import am.technologies.smart.springkit.security.annotation.EnableWebPlatformSecurity;
 import am.technologies.smart.springkit.web.annotation.EnableWebPlatformSpa;
