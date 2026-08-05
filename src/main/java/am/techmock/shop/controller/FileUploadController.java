@@ -1,7 +1,7 @@
 package am.techmock.shop.controller;
 
-import am.techmock.sbwp.util.Tuple;
-import am.techmock.sbwp.util.Tuple2;
+import am.technologies.smart.springkit.util.tuple.Tuple;
+import am.technologies.smart.springkit.util.tuple.Tuple2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

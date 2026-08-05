@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>am.techmock.sbwp</groupId>
-		<artifactId>sbwp-parent</artifactId>
-		<version>1.1.18</version>
+		<groupId>am.technologies.smart.springkit</groupId>
+		<artifactId>springkit-parent</artifactId>
+		<version>2.0.0</version>
 		<relativePath/>
 	</parent>
 	
@@ -15,9 +15,9 @@
 	<version>1.2.1</version>
 	
 	<properties>
-		<java.version>23</java.version>
-		<maven.compiler.source>23</maven.compiler.source>
-		<maven.compiler.target>23</maven.compiler.target>
+		<java.version>25</java.version>
+		<maven.compiler.source>25</maven.compiler.source>
+		<maven.compiler.target>25</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-security.version>6.4.5</spring-security.version>
 		<spring-shell.version>3.4.0</spring-shell.version>
@@ -31,15 +31,15 @@
 		<!-- Spring Dependencies-->
 		
 		<dependency>
-			<groupId>am.techmock.sbwp</groupId>
+			<groupId>am.technologies.smart.springkit</groupId>
 			<artifactId>web</artifactId>
-			<version>1.1.18</version>
+			<version>2.0.0</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>am.techmock.sbwp</groupId>
+			<groupId>am.technologies.smart.springkit</groupId>
 			<artifactId>security</artifactId>
-			<version>1.1.18</version>
+			<version>2.0.0</version>
 		</dependency>
 		
 		<dependency>
@@ -48,15 +48,15 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>am.techmock.sbwp</groupId>
+			<groupId>am.technologies.smart.springkit</groupId>
 			<artifactId>crypto</artifactId>
-			<version>1.1.18</version>
+			<version>2.0.0</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>am.techmock.sbwp</groupId>
+			<groupId>am.technologies.smart.springkit</groupId>
 			<artifactId>util</artifactId>
-			<version>1.1.18</version>
+			<version>2.0.0</version>
 		</dependency>
 		
 		<!-- Other libraries -->
@@ -87,7 +87,7 @@
 		<repository>
 			<id>techmock-repository</id>
 			<name>Techmock Repository</name>
-			<url>http://172.104.229.92:9000/private</url>
+			<url>http://100.126.6.8:9000/private</url>
 		</repository>
 	</repositories>
 	
