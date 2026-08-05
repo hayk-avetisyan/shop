@@ -85,8 +85,8 @@
 			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
 		<repository>
-			<id>techmock-repository</id>
-			<name>Techmock Repository</name>
+			<id>smart-technologies-repository</id>
+			<name>Smart Technologies Repository</name>
 			<url>http://100.126.6.8:9000/private</url>
 		</repository>
 	</repositories>
