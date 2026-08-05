@@ -121,3 +121,5 @@ upload/media/*
 !upload/media/tomat.png
 !upload/media/txemali.png
 !upload/media/xaviar.png
+# Maven credentials live in ~/.m2/settings.xml, never in the repo
+settings.xml
